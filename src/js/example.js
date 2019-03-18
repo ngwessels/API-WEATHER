@@ -2,7 +2,7 @@ import $ from 'jquery';
 
 
 // This example.js should contain all the back-end logic, the index.js is the front end-logic
-
+// To Access API Keys use this: "process.env.API-Key-Name"
 
 export class isMath {
   getInputs() {

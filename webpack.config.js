@@ -2,6 +2,7 @@ const path = require('path');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   entry: './src/index.js',
@@ -25,6 +26,7 @@ module.exports = {
         collapseWhitespace: true
       }
     }),
+    new Dotenv(),
     new HtmlWebpackPlugin({
       template: './src/example.html',
       filename: 'example.html',
