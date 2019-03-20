@@ -18,7 +18,7 @@ module.exports = {
     new UglifyJsPlugin({ sourceMap: true }),
     new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({
-      title: 'Triangle Tracker',
+      title: 'Weather Website',
       template: './src/index.html',
       inject: 'body',
       minify: {
@@ -28,8 +28,8 @@ module.exports = {
     }),
     new Dotenv(),
     new HtmlWebpackPlugin({
-      template: './src/example.html',
-      filename: 'example.html',
+      template: './src/example/index.html',
+      filename: 'weatherMap1.html',
       minify: {
         removeComments: true,
         collapseWhitespace: true
