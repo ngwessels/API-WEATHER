@@ -1,19 +1,20 @@
 import { Location } from './getLocation.js';
 import $ from 'jquery';
 import './sass/styles.scss';
+import { RadarMap } from './example/main.js';
 
 
 $(document).ready(function() {
   let location = new Location();
+  let radar = new RadarMap();
   $(".addressForm").submit(function(event) {
     event.preventDefault();
     const street = $("#streetAddress").val();
     const city = $("#city").val();
     const state = $("#state").val();
-    $("#streetAddress").hide();
-    $("#city").hide();
-    $("#state").hide();
-    $(".addresses").hide();
+    $(".addressForm").hide();
+    radar.main();
+
 
     const myPromise = location.main(street, city, state);
     myPromise.then(function(response) {
