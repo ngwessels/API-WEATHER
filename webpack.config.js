@@ -5,6 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 
 module.exports = {
+  entry: './src/example/index.js',
   entry: './src/index.js',
   output: {
     filename: 'bundle.js',
@@ -28,8 +29,10 @@ module.exports = {
     }),
     new Dotenv(),
     new HtmlWebpackPlugin({
+      title: 'radar',
       template: './src/example/index.html',
       filename: 'weatherMap1.html',
+      // inject: 'body',
       minify: {
         removeComments: true,
         collapseWhitespace: true
