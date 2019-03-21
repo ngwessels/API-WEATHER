@@ -28,12 +28,14 @@ $(document).ready(function() {
       myPromise2.then(function(response) {
         let body = JSON.parse(response);
         weather.getWeather(body);
+        weather.getDaily();
         console.log(weather.results);
         setInterval(function() {
           let myPromise2 = weather.main(location.currentCoords);
           myPromise2.then(function(response) {
             let body = JSON.parse(response);
             weather.getWeather(body);
+            weather.getDaily();
             console.log(weather.results);
             console.log("Tick");
           });
