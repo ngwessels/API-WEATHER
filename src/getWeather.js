@@ -55,7 +55,16 @@ export class Weather {
   getDaily() {
     let day = [];
     let length = this.daily.data.length;
-    for (let i = 0; i < length; i++) {
+    let d = new Date();
+    let dayNumber = d.getDay();
+    console.log(length);
+    let dayToday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    for(let i = 0; i < dayNumber; i++) {
+      let currentDay = dayToday[0];
+      dayToday.shift();
+      dayToday.push(currentDay);
+    }
+    for (let i = 0; i < 7; i++) {
       let array = [];
       let daily = this.daily.data[i];
       let apparentTempHigh = daily.apparentTemperatureHigh;
@@ -96,8 +105,40 @@ export class Weather {
       let windGust = daily.windGust;
       let windGustTime = daily.windGustTime;
       let windSpeed = daily.windSpeed;
-      array = [apparentTempHigh, apparentTempHighTime, apparentTempLow, apparentTempLowTime, apparentTempMax, apparentTempMaxTime, apparentTempMin, apparentTempMinTime, cloudCover, dewPoint, humidity, icon, moonPhase, ozone, precipIntensity, precipIntensityMax, precipIntensityMaxTime, precipProbability, pressure, summary, sunrise, sunset, tempHigh, tempHighTime, tempLow, tempLowTime, tempMax, tempMaxTime, tempMin, tempMinTime, time, uv, uvTime, visibility, windBearing, windGust, windGustTime, windSpeed]
-      day[i] = array;
+      // array = [apparentTempHigh, apparentTempHighTime, apparentTempLow, apparentTempLowTime, apparentTempMax, apparentTempMaxTime, apparentTempMin, apparentTempMinTime, cloudCover, dewPoint, humidity, icon, moonPhase, ozone, precipIntensity, precipIntensityMax, precipIntensityMaxTime, precipProbability, pressure, summary, sunrise, sunset, tempHigh, tempHighTime, tempLow, tempLowTime, tempMax, tempMaxTime, tempMin, tempMinTime, time, uv, uvTime, visibility, windBearing, windGust, windGustTime, windSpeed]
+      // day[i] = array;
+      if(i == 0) {
+        $(".Day" + [i]).append("<p class='date'>Today</p>");
+      } else {
+        $(".Day" + [i]).append("<p class='date'>" + dayToday[i] + "</p>");
+      }
+      if(icon == "clear-day" || icon == "clear-night") {
+        $(".Day" + [i]).append("<div class='sunny'><div class='sun'><div class='rays'></div></div></div>");
+      } else if (icon == "rain") {
+        $(".Day" + [i]).append("<div class='rainy'><div class='cloud'></div><div class='rain'></div></div>");
+      } else if (icon == "snow") {
+        $(".Day" + [i]).append("<div class='flurries'><div class='cloud'></div><div class='snow'><div class='flake'></div><div class='flake'></div></div></div>");
+      } else if (icon == "sleet") {
+        $(".Day" + [i]).append("<div class='flurries'><div class='cloud'></div><div class='snow'><div class='flake'></div><div class='rain'></div></div></div>");
+      } else if(icon == "wind") {
+        $(".Day" + [i]).append("<div class='sun-clouds'><div class='cloud'></div><div class='sun'><div class='rays'></div></div></div>");
+      } else if(icon == "fog") {
+        $(".Day" + [i]).append("<div class='cloudy'><div class='cloud'></div><div class='cloud'></div></div>");
+      } else if(icon == "cloudy") {
+        $(".Day" + [i]).append("<div class='cloudy'><div class='cloud'></div><div class='cloud'></div></div>");
+      } else if(icon == "partly-cloudy-day" || icon == "partly-cloudy-night") {
+        $(".Day" + [i]).append("<div class='sun-clouds'><div class='cloud'></div><div class='sun'><div class='rays'></div></div></div>");
+      } else if(icon == "hail" || icon == "thunderstorm" || icon == "tornado"){
+      }
+      $(".Day" + [i]).append("<div class='weatherInfo'><div class='weathertemp'><p class='tempHigh'>High: " + tempHigh + "°F</p><p class='tempLow'>Low: " + tempLow + "°F</p></div></div>");
+
+
+
+    }
+    $(".localWeather").show();
+    for(let i = 0; i < 7; i ++) {
+      $(".Day" + [i]).hide();
+      $(".Day" + [i]).fadeIn(i * 800);
     }
   }
 
@@ -128,59 +169,27 @@ export class Weather {
       let windSpeed = currently.windSpeed;
       array = [apparentTemperature, cloudCover, dewPoint, humidity, icon, nearestStormDistance, ozone, precipIntensity, precipProbability, pressure, summary, temp, time, uv, visibility, windBearing, windGust, windSpeed];
       current[i] = array;
+      $(".currently").append("<p id='currentTemp'>" + temp + "°F</p>");
       if(icon == "clear-day" || icon == "clear-night") {
+        $(".currently").append("<div class='sunny'><div class='sun'><div class='rays'></div></div></div>");
       } else if (icon == "rain") {
-        $(".currently").append("<div class='rainy'></div>");
-        $(".rainy").append("<div class='cloud'></div>");
-        $(".rainy").append("<div class='rain'></div>");
-        $(".currently").show();
-
+        console.log("Supposed to be raining");
+        $(".currently").append("<div class='rainy'><div class='cloud'></div><div class='rain'></div></div>");
       } else if (icon == "snow") {
-        $(".currently").append("<div class='flurries'></div>");
-        $(".flurries").append("<div class='cloud'></div>");
-        $(".flurries").append("<div class='snow'></div>");
-        $(".snow").append("<div class='flake'></div>");
-        $(".snow").append("<div class='flake'></div>");
-        $(".currently").show();
-
-      } else if (icon == "cloudy") {
-        $(".currently").append("<div class='flurries'></div>");
-        $(".flurries").append("<div class='cloud'></div>");
-        $(".flurries").append("<div class='snow'></div>");
-        $(".snow").append("<div class='flake'></div>");
-        $(".snow").append("<div class='rain'></div>");
-        $(".currently").show();
-
+        $(".currently").append("<div class='flurries'><div class='cloud'></div><div class='snow'><div class='flake'></div><div class='flake'></div></div></div>");
+      } else if (icon == "sleet") {
+        $(".currently").append("<div class='flurries'><div class='cloud'></div><div class='snow'><div class='flake'></div><div class='rain'></div></div></div>");
       } else if(icon == "wind") {
-        $(".currently").append("<div class='sun-clouds'></div>");
-        $(".sun-clouds").append("<div class='cloud'></div>");
-        $(".sun-clouds").append("<div class='sun'></div>");
-        $(".sun").append("<div class='rays'></div>");
-        $(".currently").show();
+        $(".currently").append("<div class='sun-clouds'><div class='cloud'></div><div class='sun'><div class='rays'></div></div></div>");
       } else if(icon == "fog") {
-        $(".currently").append("<div class='cloudy'></div>");
-        $(".cloudy").append("<div class='cloud'></div>");
-        $(".cloudy").append("<div class='cloud'></div>");
-        $(".currently").show();
-
+        $(".currently").append("<div class='cloudy'><div class='cloud'></div><div class='cloud'></div></div>");
       } else if(icon == "cloudy") {
-        $(".currently").append("<div class='cloudy'></div>");
-        $(".cloudy").append("<div class='cloud'></div>");
-        $(".cloudy").append("<div class='cloud'></div>");
-        $(".currently").show();
-
+        $(".currently").append("<div class='cloudy'><div class='cloud'></div><div class='cloud'></div></div>");
       } else if(icon == "partly-cloudy-day" || icon == "partly-cloudy-night") {
-        $(".currently").append("<div class='sun-clouds'></div>");
-        $(".sun-clouds").append("<div class='cloud'></div>");
-        $(".sun-clouds").append("<div class='sun'></div>");
-        $(".sun").append("<div class='rays'></div>");
-        $(".currently").show();
-
-
+        console.log("SUpposed to be partly cloudy");
+        $(".currently").append("<div class='sun-clouds'><div class='cloud'></div><div class='sun'><div class='rays'></div></div></div>");
       } else if(icon == "hail" || icon == "thunderstorm" || icon == "tornado"){
-
       }
-
     }
     console.log(current);
   }

@@ -21,6 +21,8 @@
 
 /* Modified 2016-05-01 (set color via variable) by PatharaNor */
 
+
+
 :root {
   --weather-border-color: grey;
   --weather-bg-color: black;
@@ -36,10 +38,13 @@
 }
 
 .cloud {
+  display: flex;
+  margin: 0 auto;
+  margin-top: 50%;
   position: relative;
   z-index: 1;
   top: 80px;
-  left: 115px;
+  left: 50%;
   width: 3.6875em;
   height: 3.6875em;
   margin: -1.84375em;
@@ -81,7 +86,7 @@
 .sun {
   position: relative;
   top: 80px;
-  left: 115px;
+  left: 50%;
   width: 2.5em;
   height: 2.5em;
   margin: -1.25em;
@@ -127,12 +132,10 @@
 .sun + .rain {
   margin: 4em 0em;
 }
-.flurries + .rain {
-  margin: -4em 1em;
-}
+
 
 .flurries{
-  border: 1px solid red;
+  // border: 1px solid red;
 }
 
 .rain,
@@ -141,12 +144,12 @@
   position: relative;
   z-index: 1;
   top: 80px;
-  left: 85px;
+  left: 39%;
   width: 3.75em;
   height: 3.75em;
   // margin: 0.375em 0 0 -2em;
   background: var(--weather-bg-color);
-  border: 1px solid red;
+  // border: 1px solid red;
 }
 
 .rain:after {
@@ -314,4 +317,18 @@
     background: var(--weather-border-color);
     opacity: 0.2;
   }
+}
+.rainy {
+  height: 0px;
+}
+.cloudy {
+  height: 0px;
+}
+
+.sun-clouds {
+  height: 0px;
+}
+
+.flurries {
+  height: 0px;
 }

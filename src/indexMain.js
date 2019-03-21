@@ -34,6 +34,7 @@ $(document).ready(function() {
           let body = JSON.parse(response);
           weather.getWeather(body);
           weather.getMinutely();
+          $(".darkskylogo").hide();
           $("#loadingScreen").hide();
           // $("#map").show();
           setInterval(function() {
