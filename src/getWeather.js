@@ -136,7 +136,6 @@ export class Weather {
   }
 
   getHourly() {
-    debugger;
     let hour = [];
     let length = this.hourly.data.length;
     for(let i = 0; i < length; i++) {
