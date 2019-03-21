@@ -53,23 +53,21 @@ export class Weather {
   }
 
   getDaily() {
-    debugger;
     let day = [];
     let length = this.daily.data.length;
     console.log(length);
     console.log(this.daily.data[0]);
     for (let i = 0; i < length; i++) {
-      debugger;
       let array = [];
       let daily = this.daily.data[i];
-      let apparentTempHigh = daily.apparerentTemperatureHigh;
+      let apparentTempHigh = daily.apparentTemperatureHigh;
       let apparentTempHighTime = daily.apparentTemperatureHighTime;
       let apparentTempLow = daily.apparentTemperatureLow;
       let apparentTempLowTime = daily.apparentTemperatureLowTime;
       let apparentTempMax = daily.apparentTemperatureMax;
       let apparentTempMaxTime = daily.apparentTemperatureMaxTime;
       let apparentTempMin = daily.apparentTemperatureMin;
-      let apparentTempMinTime = daily.apparentTemperatureMineTime;
+      let apparentTempMinTime = daily.apparentTemperatureMinTime;
       let cloudCover = daily.cloudCover;
       let dewPoint = daily.dewPoint;
       let humidity = daily.humidity;
@@ -104,6 +102,85 @@ export class Weather {
       day[i] = array;
     }
     console.log(day);
+  }
+
+  getCurrently() {
+    let current = [];
+    let length = this.currently.length;
+    for(let i = 0; i < 1; i++) {
+      let array = [];
+      let currently = this.currently;
+      let apparentTemperature = currently.apparentTemperature;
+      let cloudCover = currently.cloudCover;
+      let dewPoint = currently.dewPoint;
+      let humidity = currently.humidity;
+      let icon = currently.icon;
+      let nearestStormBearing = currently.nearestStormBearing;
+      let nearestStormDistance = currently.nearestStormDistance;
+      let ozone = currently.ozone;
+      let precipIntensity = currently.precipIntensity;
+      let precipProbability = currently.precipProbability;
+      let pressure = currently.pressure;
+      let summary = currently.summary;
+      let temp = currently.temperature;
+      let time = currently.time;
+      let uv = currently.uvIndex;
+      let visibility = currently.visibility;
+      let windBearing = currently.windBearing;
+      let windGust = currently.windGust;
+      let windSpeed = currently.windSpeed;
+      array = [apparentTemperature, cloudCover, dewPoint, humidity, icon, nearestStormBearing, nearestStormDistance, ozone, precipIntensity, precipProbability, pressure, summary, temp, time, uv, visibility, windBearing, windGust, windSpeed];
+      current[i] = array;
+    }
+    console.log(current);
+  }
+
+  getHourly() {
+    debugger;
+    let hour = [];
+    let length = this.hourly.data.length;
+    for(let i = 0; i < length; i++) {
+      let array = [];
+      let hourly = this.hourly.data[i];
+      let apparentTemp = hourly.apparentTemperature;
+      let cloudCover = hourly.cloudCover;
+      let dewPoint = hourly.dewPoint;
+      let humidity = hourly.humidity;
+      let icon = hourly.icon;
+      let ozone = hourly.ozone;
+      let precipIntensity = hourly.precipIntensity;
+      let precipProbability = hourly.precipProbability;
+      let pressure = hourly.pressure;
+      let summary = hourly.summary;
+      let temp = hourly.temperature;
+      let time = hourly.time;
+      let uv = hourly.uvIndex;
+      let visibility = hourly.visibility;
+      let windBearing = hourly.windBearing;
+      let windGust = hourly.windGust;
+      let windSpeed = hourly.windSpeed;
+      array = [apparentTemp, cloudCover, dewPoint, humidity, icon, ozone, precipIntensity, precipProbability, pressure, summary, temp, uv ,visibility, windBearing, windGust, windSpeed];
+      hour[i] = array;
+    }
+    console.log(hour);
+  }
+
+  getMinutely() {
+    let length = this.minutely.data.length;
+    let minutely = [];
+    for(let i = 0; i < length; i++) {
+      let array = [];
+      let minute = this.minutely.data[i];
+      let precipIntensity = minute.precipIntensity;
+      let precipProbability = minute.precipProbability;
+      let time = minute.time;
+      array = [precipIntensity, precipProbability, time];
+      minutely[i] = array;
+    }
+    console.log(minutely);
+    this.getDaily();
+    this.getCurrently();
+    this.getHourly();
   }
 
 
