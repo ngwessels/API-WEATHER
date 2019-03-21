@@ -55,8 +55,6 @@ export class Weather {
   getDaily() {
     let day = [];
     let length = this.daily.data.length;
-    console.log(length);
-    console.log(this.daily.data[0]);
     for (let i = 0; i < length; i++) {
       let array = [];
       let daily = this.daily.data[i];
@@ -101,12 +99,12 @@ export class Weather {
       array = [apparentTempHigh, apparentTempHighTime, apparentTempLow, apparentTempLowTime, apparentTempMax, apparentTempMaxTime, apparentTempMin, apparentTempMinTime, cloudCover, dewPoint, humidity, icon, moonPhase, ozone, precipIntensity, precipIntensityMax, precipIntensityMaxTime, precipProbability, pressure, summary, sunrise, sunset, tempHigh, tempHighTime, tempLow, tempLowTime, tempMax, tempMaxTime, tempMin, tempMinTime, time, uv, uvTime, visibility, windBearing, windGust, windGustTime, windSpeed]
       day[i] = array;
     }
-    console.log(day);
   }
 
   getCurrently() {
     let current = [];
     let length = this.currently.length;
+    console.log(this.currently);
     for(let i = 0; i < 1; i++) {
       let array = [];
       let currently = this.currently;
@@ -115,7 +113,6 @@ export class Weather {
       let dewPoint = currently.dewPoint;
       let humidity = currently.humidity;
       let icon = currently.icon;
-      let nearestStormBearing = currently.nearestStormBearing;
       let nearestStormDistance = currently.nearestStormDistance;
       let ozone = currently.ozone;
       let precipIntensity = currently.precipIntensity;
@@ -129,8 +126,61 @@ export class Weather {
       let windBearing = currently.windBearing;
       let windGust = currently.windGust;
       let windSpeed = currently.windSpeed;
-      array = [apparentTemperature, cloudCover, dewPoint, humidity, icon, nearestStormBearing, nearestStormDistance, ozone, precipIntensity, precipProbability, pressure, summary, temp, time, uv, visibility, windBearing, windGust, windSpeed];
+      array = [apparentTemperature, cloudCover, dewPoint, humidity, icon, nearestStormDistance, ozone, precipIntensity, precipProbability, pressure, summary, temp, time, uv, visibility, windBearing, windGust, windSpeed];
       current[i] = array;
+      if(icon == "clear-day" || icon == "clear-night") {
+      } else if (icon == "rain") {
+        $(".currently").append("<div class='rainy'></div>");
+        $(".rainy").append("<div class='cloud'></div>");
+        $(".rainy").append("<div class='rain'></div>");
+        $(".currently").show();
+
+      } else if (icon == "snow") {
+        $(".currently").append("<div class='flurries'></div>");
+        $(".flurries").append("<div class='cloud'></div>");
+        $(".flurries").append("<div class='snow'></div>");
+        $(".snow").append("<div class='flake'></div>");
+        $(".snow").append("<div class='flake'></div>");
+        $(".currently").show();
+
+      } else if (icon == "cloudy") {
+        $(".currently").append("<div class='flurries'></div>");
+        $(".flurries").append("<div class='cloud'></div>");
+        $(".flurries").append("<div class='snow'></div>");
+        $(".snow").append("<div class='flake'></div>");
+        $(".snow").append("<div class='rain'></div>");
+        $(".currently").show();
+
+      } else if(icon == "wind") {
+        $(".currently").append("<div class='sun-clouds'></div>");
+        $(".sun-clouds").append("<div class='cloud'></div>");
+        $(".sun-clouds").append("<div class='sun'></div>");
+        $(".sun").append("<div class='rays'></div>");
+        $(".currently").show();
+      } else if(icon == "fog") {
+        $(".currently").append("<div class='cloudy'></div>");
+        $(".cloudy").append("<div class='cloud'></div>");
+        $(".cloudy").append("<div class='cloud'></div>");
+        $(".currently").show();
+
+      } else if(icon == "cloudy") {
+        $(".currently").append("<div class='cloudy'></div>");
+        $(".cloudy").append("<div class='cloud'></div>");
+        $(".cloudy").append("<div class='cloud'></div>");
+        $(".currently").show();
+
+      } else if(icon == "partly-cloudy-day" || icon == "partly-cloudy-night") {
+        $(".currently").append("<div class='sun-clouds'></div>");
+        $(".sun-clouds").append("<div class='cloud'></div>");
+        $(".sun-clouds").append("<div class='sun'></div>");
+        $(".sun").append("<div class='rays'></div>");
+        $(".currently").show();
+
+
+      } else if(icon == "hail" || icon == "thunderstorm" || icon == "tornado"){
+
+      }
+
     }
     console.log(current);
   }
@@ -161,7 +211,6 @@ export class Weather {
       array = [apparentTemp, cloudCover, dewPoint, humidity, icon, ozone, precipIntensity, precipProbability, pressure, summary, temp, uv ,visibility, windBearing, windGust, windSpeed];
       hour[i] = array;
     }
-    console.log(hour);
   }
 
   getMinutely() {
@@ -176,7 +225,6 @@ export class Weather {
       array = [precipIntensity, precipProbability, time];
       minutely[i] = array;
     }
-    console.log(minutely);
     this.getDaily();
     this.getCurrently();
     this.getHourly();

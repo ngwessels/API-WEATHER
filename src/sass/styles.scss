@@ -1,12 +1,13 @@
 body {
-  background-image: url('./../assets/img/background.png');
+  // background-image: url('./../assets/img/background.png');
+  background-color: black;
   background-attachment: fixed;
+  margin: 0;
 }
 
 
-
-
 .addressForm {
+  display: none;
   width: 80%;
   height: 500px;
   margin: 0 auto;
@@ -40,4 +41,41 @@ body {
   width: 500px;
   height: 500px;
   display: none;
+}
+
+.localWeather {
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  .currentLocation {
+    margin: 0 auto;
+    margin-top: 5%;
+    width: 60%;
+    height: 50px;
+    border: 3px solid white;
+    text-align: center;
+    p {
+      color: white;
+      font-size: 35px;
+    }
+  }
+  .currently {
+    
+    margin: 0 auto;
+    margin-top: 8%;
+    width: 20%;
+    height: 350px;
+    color: white;
+    border: 3px solid white;
+    border-radius: 25px;
+    .icon-weather {
+      width: 100px;
+      height: 100px;
+    }
+
+  }
+  .week {
+    width: 100%;
+  }
 }
