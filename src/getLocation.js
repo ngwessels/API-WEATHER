@@ -1,7 +1,9 @@
 import $ from 'jquery';
+import { RadarMap } from './example/main.js';
 export class Location {
   constructor() {
     this.data;
+    this.currentCoords = [];
   }
 
   combine(street, city, state) {
@@ -34,10 +36,13 @@ export class Location {
   }
 
   getLocation(info) {
+    let radar = new RadarMap();
     console.log(info);
     let lat = info.results[0].geometry.location.lat;
     let lng = info.results[0].geometry.location.lng;
     let array = [lat, lng];
+    radar.main(array);
+    this.currentCoords = array;
     return array;
   }
 

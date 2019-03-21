@@ -28,16 +28,16 @@ module.exports = {
       }
     }),
     new Dotenv(),
-    new HtmlWebpackPlugin({
-      title: 'radar',
-      template: './src/example/index.html',
-      filename: 'weatherMap1.html',
-      // inject: 'body',
-      minify: {
-        removeComments: true,
-        collapseWhitespace: true
-      }
-    }),
+    // new HtmlWebpackPlugin({
+    //   title: 'radar',
+    //   template: './src/example/index.html',
+    //   filename: 'weatherMap1.html',
+    //   // inject: 'body',
+    //   minify: {
+    //     removeComments: true,
+    //     collapseWhitespace: true
+    //   }
+    // }),
   ],
   module: {
     rules: [
