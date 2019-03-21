@@ -30,7 +30,6 @@ export class Location {
     return string;
   }
   location(string) {
-    debugger;
     const url = "https://maps.googleapis.com/maps/api/geocode/json?address="+ string + "&key=" + process.env.google_geocode_api;
     return url;
   }
@@ -48,7 +47,6 @@ export class Location {
 
   main(street, city, state) {
     console.log(street, city, state);
-    debugger;
     let that = this;
     const string = this.combine(street, city, state);
     return new Promise(function(resolve, reject) {

@@ -1,4 +1,5 @@
 import { Location } from './getLocation.js';
+import { Weather } from './getWeather.js';
 import $ from 'jquery';
 import './example/leaflet/leaflet.scss';
 import './leaflet-openweathermap.scss';
@@ -9,20 +10,26 @@ import './sass/styles.scss';
 
 $(document).ready(function() {
   let location = new Location();
+  let weather = new Weather();
   $(".addressForm").submit(function(event) {
     event.preventDefault();
     const street = $("#streetAddress").val();
     const city = $("#city").val();
     const state = $("#state").val();
     $(".addressForm").hide();
-    console.log(location.currentCoords);
 
 
     const myPromise = location.main(street, city, state);
     myPromise.then(function(response) {
       let body = JSON.parse(response);
       const results = location.getLocation(body);
-      console.log(results);
+      const myPromise2 = weather.main(location.currentCoords);
+      myPromise2.then(function(response) {
+        let body = JSON.parse(response);
+        weather.getWeather(body);
+      }, function(error) {
+        console.log("Error");
+      });
       // that.printResults(results)
       }, function(error) {
       console.log("Error");
