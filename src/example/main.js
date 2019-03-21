@@ -2435,4 +2435,4 @@ export class RadarMap {
 						}
 }
 let radar = new RadarMap();
-radar.main();
+// radar.main();

@@ -2,6 +2,10 @@ import { Location } from './getLocation.js';
 import $ from 'jquery';
 import './sass/styles.scss';
 import { RadarMap } from './example/main.js';
+import './example/leaflet/leaflet.scss';
+import './leaflet-openweathermap.scss';
+import './example/files/map.scss';
+import './example/leaflet/leaflet-languageselector.scss';
 
 
 $(document).ready(function() {

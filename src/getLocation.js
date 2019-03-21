@@ -34,6 +34,7 @@ export class Location {
   }
 
   getLocation(info) {
+    console.log(info);
     let lat = info.results[0].geometry.location.lat;
     let lng = info.results[0].geometry.location.lng;
     let array = [lat, lng];

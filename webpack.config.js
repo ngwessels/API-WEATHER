@@ -6,7 +6,7 @@ const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   entry: './src/example/index.js',
-  entry: './src/index.js',
+  entry: './src/indexMain.js',
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist')
@@ -20,7 +20,7 @@ module.exports = {
     new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({
       title: 'Weather Website',
-      template: './src/index.html',
+      template: './src/indexMain.html',
       inject: 'body',
       minify: {
         removeComments: true,
