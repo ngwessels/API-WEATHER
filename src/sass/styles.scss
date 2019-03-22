@@ -3,6 +3,7 @@ body {
   background-color: black;
   background-attachment: fixed;
   margin: 0;
+  top: 3000px;
   // overflow: hidden;
 }
 
@@ -10,14 +11,15 @@ body {
 .addressForm {
   // display: none;
   width: 80%;
-  height: 500px;
+  height: 800px;
   margin: 0 auto;
-  margin-top: 300px;
+  // margin-top: 300px;
   .addresses {
     width: 100%;
     height: 200px;
     display: flex;
     margin: 0 auto;
+    margin-top: 300px;
     flex-direction: column;
     input {
       width: 400px;
@@ -64,23 +66,34 @@ body {
     }
   }
   .currently {
-
-    margin: 0 auto;
-    margin-top: 8%;
-    width: 300px;
-    height: 450px;
-    color: white;
-    border: 3px solid white;
-    border-radius: 25px;
-    text-align: center;
-    p {
-      font-size: 25px;
-    }
-    .icon-weather {
-      width: 100px;
-      height: 100px;
-    }
-
+      width: 100%;
+      height: 450px;
+      justify-content: space-between;
+      margin-top: 2%;
+      .weatherInfo{
+        margin: 0 auto;
+        margin-top: 18vh;
+        width: 100%;
+        .weathertemp {
+          margin: 0 auto;
+          text-align: center;
+        }
+          // margin-left: 7vw;
+        }
+        width: 300px;
+        height: 450px;
+        border: 3px solid white;
+        margin: 0 auto;
+        margin-top: 2%;
+        border-radius: 25px;
+        color: white;
+        .date {
+          display: inline-block;
+          font-size: 30px;
+          width: 100%;
+          text-align: center;
+          margin: 0 auto;
+        }
   }
   .week {
     width: 100%;
@@ -92,8 +105,15 @@ body {
     margin-top: 2%;
     .dayInfo {
       .weatherInfo{
-        margin-top: 25vh;
-        margin-left: 7vw;
+        margin: 0 auto;
+        margin-top: 18vh;
+        width: 100%;
+        .weathertemp {
+          margin: 0 auto;
+          text-align: center;
+        }
+        // margin-left: 7vw;
+
       }
       width: 300px;
       height: 450px;
@@ -122,5 +142,11 @@ body {
   height: 400px;
   img {
     width: 100%;
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .currentLocation{
+    display: none;
   }
 }

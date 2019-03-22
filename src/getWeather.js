@@ -20,7 +20,13 @@ export class Weather {
     this.lng;
   }
 
-
+  resetDivs() {
+    for(let i = 0; i > 7; i++) {
+      $(".Day" + [i]).empty();
+    }
+    $(".currently").empty();
+    $(".dayInfo").empty();
+  }
   url(lat, lng) {
     let coords = lat + "," + lng;
     let url = 'https://corsanywhere.herokuapp.com/https://api.darksky.net/forecast/' + process.env.dark_sky_api + "/" + lat + "," + lng;
@@ -50,6 +56,45 @@ export class Weather {
     this.offset;
     this.timezone;
     this.results = [];
+  }
+
+
+  getDirection(input) {
+    let string = "";
+    if(input >= 345 || input < 15){
+      string = "N";
+    } else if(input >= 15 && input < 30) {
+      string = "NNE";
+    } else if(input >= 30 && input < 60) {
+      string = "NE";
+    } else if(input >= 60 && input < 75) {
+      string = "ENE";
+    } else if(input >= 75 && input < 105) {
+      string = "E";
+    } else if(input >= 105 && input < 120) {
+      string = "ESE";
+    } else if(input >= 120 && input < 150) {
+      string = "SE";
+    } else if(input >= 150 && input < 165) {
+      string = "SSE";
+    } else if(input >= 165 && input < 195) {
+      string = "S";
+    } else if(input >= 195 && input < 210) {
+      string = "SSW";
+    } else if(input >= 210 && input < 240) {
+      string = "SW";
+    } else if(input >= 240 && input < 255) {
+      string = "WSW";
+    } else if(input >= 255 && input < 285) {
+      string = "W";
+    } else if(input >= 285 && input < 300) {
+      string = "WNW";
+    } else if(input >= 300 && input < 330) {
+      string = "NW";
+    } else if(input >= 330 && input < 345) {
+      string = "NNW";
+    }
+    return string;
   }
 
   getDaily() {
@@ -130,10 +175,7 @@ export class Weather {
         $(".Day" + [i]).append("<div class='sun-clouds'><div class='cloud'></div><div class='sun'><div class='rays'></div></div></div>");
       } else if(icon == "hail" || icon == "thunderstorm" || icon == "tornado"){
       }
-      $(".Day" + [i]).append("<div class='weatherInfo'><div class='weathertemp'><p class='tempHigh'>High: " + tempHigh + "°F</p><p class='tempLow'>Low: " + tempLow + "°F</p></div></div>");
-
-
-
+      $(".Day" + [i]).append("<div class='weatherInfo'><div class='weathertemp'><p class='tempHigh'>High: " + tempHigh + "°F</p><p class='tempLow'>Low: " + tempLow + "°F</p><p class='wind'>Wind Speed: " + windSpeed + "MPH</p><p class='humidity'>Humidity: " + humidity * 100 + "%</p><p class='cloudCover'>Cloud Cover: " + cloudCover * 100 + "%</p><p class='uv'>UV Index: " + uv + "</p><p class='sunRise'>Sunrise Time: " + this.timeConverter(sunrise) + "</p><p class='sunSet'>SunSet Time: " + this.timeConverter(sunset) + "</p></div></div>");
     }
     $(".localWeather").show();
     for(let i = 0; i < 7; i ++) {
@@ -142,55 +184,71 @@ export class Weather {
     }
   }
 
+
+  timeConverter(input) {
+    let a = new Date(input * 1000);
+    let hour = a.getHours();
+    let minute = a.getMinutes();
+    let sec = a.getSeconds();
+    var index = "AM"
+    if(hour > 12) {
+      hour = hour - 12;
+      index = "PM";
+    }
+    if(minute <= 9) {
+      minute = "0" + minute;
+    }
+    if(sec <= 9) {
+      sec = "0" + sec;
+    }
+    let time = hour +":" + minute + ":" + sec + index;
+    return time;
+  };
+
   getCurrently() {
     let current = [];
     let length = this.currently.length;
     console.log(this.currently);
-    for(let i = 0; i < 1; i++) {
-      let array = [];
-      let currently = this.currently;
-      let apparentTemperature = currently.apparentTemperature;
-      let cloudCover = currently.cloudCover;
-      let dewPoint = currently.dewPoint;
-      let humidity = currently.humidity;
-      let icon = currently.icon;
-      let nearestStormDistance = currently.nearestStormDistance;
-      let ozone = currently.ozone;
-      let precipIntensity = currently.precipIntensity;
-      let precipProbability = currently.precipProbability;
-      let pressure = currently.pressure;
-      let summary = currently.summary;
-      let temp = currently.temperature;
-      let time = currently.time;
-      let uv = currently.uvIndex;
-      let visibility = currently.visibility;
-      let windBearing = currently.windBearing;
-      let windGust = currently.windGust;
-      let windSpeed = currently.windSpeed;
-      array = [apparentTemperature, cloudCover, dewPoint, humidity, icon, nearestStormDistance, ozone, precipIntensity, precipProbability, pressure, summary, temp, time, uv, visibility, windBearing, windGust, windSpeed];
-      current[i] = array;
-      $(".currently").append("<p id='currentTemp'>" + temp + "°F</p>");
-      if(icon == "clear-day" || icon == "clear-night") {
-        $(".currently").append("<div class='sunny'><div class='sun'><div class='rays'></div></div></div>");
-      } else if (icon == "rain") {
-        console.log("Supposed to be raining");
-        $(".currently").append("<div class='rainy'><div class='cloud'></div><div class='rain'></div></div>");
-      } else if (icon == "snow") {
-        $(".currently").append("<div class='flurries'><div class='cloud'></div><div class='snow'><div class='flake'></div><div class='flake'></div></div></div>");
-      } else if (icon == "sleet") {
-        $(".currently").append("<div class='flurries'><div class='cloud'></div><div class='snow'><div class='flake'></div><div class='rain'></div></div></div>");
-      } else if(icon == "wind") {
-        $(".currently").append("<div class='sun-clouds'><div class='cloud'></div><div class='sun'><div class='rays'></div></div></div>");
-      } else if(icon == "fog") {
-        $(".currently").append("<div class='cloudy'><div class='cloud'></div><div class='cloud'></div></div>");
-      } else if(icon == "cloudy") {
-        $(".currently").append("<div class='cloudy'><div class='cloud'></div><div class='cloud'></div></div>");
-      } else if(icon == "partly-cloudy-day" || icon == "partly-cloudy-night") {
-        console.log("SUpposed to be partly cloudy");
-        $(".currently").append("<div class='sun-clouds'><div class='cloud'></div><div class='sun'><div class='rays'></div></div></div>");
-      } else if(icon == "hail" || icon == "thunderstorm" || icon == "tornado"){
-      }
+    let array = [];
+    let currently = this.currently;
+    let apparentTemperature = currently.apparentTemperature;
+    let cloudCover = currently.cloudCover;
+    let dewPoint = currently.dewPoint;
+    let humidity = currently.humidity;
+    let icon = currently.icon;
+    let nearestStormDistance = currently.nearestStormDistance;
+    let ozone = currently.ozone;
+    let precipIntensity = currently.precipIntensity;
+    let precipProbability = currently.precipProbability;
+    let pressure = currently.pressure;
+    let summary = currently.summary;
+    let temp = currently.temperature;
+    let time = currently.time;
+    let uv = currently.uvIndex;
+    let visibility = currently.visibility;
+    let windBearing = currently.windBearing;
+    let windGust = currently.windGust;
+    let windSpeed = currently.windSpeed;
+    $(".currently").append("<p class='date'>Current Weather</p>");
+    if(icon == "clear-day" || icon == "clear-night") {
+      $(".currently").append("<div class='sunny'><div class='sun'><div class='rays'></div></div></div>");
+    } else if (icon == "rain") {
+      $(".currently").append("<div class='rainy'><div class='cloud'></div><div class='rain'></div></div>");
+    } else if (icon == "snow") {
+      $(".currently").append("<div class='flurries'><div class='cloud'></div><div class='snow'><div class='flake'></div><div class='flake'></div></div></div>");
+    } else if (icon == "sleet") {
+      $(".currently").append("<div class='flurries'><div class='cloud'></div><div class='snow'><div class='flake'></div><div class='rain'></div></div></div>");
+    } else if(icon == "wind") {
+      $(".currently").append("<div class='sun-clouds'><div class='cloud'></div><div class='sun'><div class='rays'></div></div></div>");
+    } else if(icon == "fog") {
+      $(".currently").append("<div class='cloudy'><div class='cloud'></div><div class='cloud'></div></div>");
+    } else if(icon == "cloudy") {
+      $(".currently").append("<div class='cloudy'><div class='cloud'></div><div class='cloud'></div></div>");
+    } else if(icon == "partly-cloudy-day" || icon == "partly-cloudy-night") {
+      $(".currently").append("<div class='sun-clouds'><div class='cloud'></div><div class='sun'><div class='rays'></div></div></div>");
+    } else if(icon == "hail" || icon == "thunderstorm" || icon == "tornado"){
     }
+    $(".currently").append("<div class='weatherInfo'><div class='weathertemp'><p class='temp'>Current Temperature: " + temp + "°F</p><p class='wind'>Wind Speed: " + windSpeed + "MPH</p><p class='windDirection'>Wind Direction: " + this.getDirection(windBearing) + "</p><p class='humidity'>Humidity: " + humidity * 100 + "%</p><p class='cloudCover'>Cloud Cover: " + cloudCover * 100 + "%</p><p class='uv'>UV Index: " + uv + "</p></div></div>");
     console.log(current);
   }
 

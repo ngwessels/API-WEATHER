@@ -41,6 +41,7 @@ $(document).ready(function() {
             let myPromise2 = weather.main(location.currentCoords);
             myPromise2.then(function(response) {
               let body = JSON.parse(response);
+              weather.resetDivs();
               weather.getWeather(body);
               weather.getMinutely();
             });
