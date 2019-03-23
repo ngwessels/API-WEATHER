@@ -62,15 +62,6 @@ export class Location {
         request.open("GET", url, true);
         request.send();
       });
-    // promise.then(function(response) {
-    //   let body = JSON.parse(response);
-    //   console.log(this)
-    //   const results = that.getLocation(body);
-    //   console.log(results);
-    //   that.printResults(results)
-    //   }, function(error) {
-    //   console.log("Error");
-    // });
   }
 
   getInfo() {
