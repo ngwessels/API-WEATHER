@@ -6,12 +6,15 @@ body {
   // overflow: hidden;
 }
 
-
+#summary {
+  color: white;
+}
 .addressForm {
   // display: none;
   width: 80%;
-  height: 800px;
+  height: 300px;
   margin: 0 auto;
+  margin-top: 5%;
   // margin-top: 300px;
   .addresses {
     width: 100%;
@@ -37,19 +40,35 @@ body {
 
   }
 }
-
-#map {
-  width: 500px;
-  height: 500px;
+.mapContainer {
   display: none;
+  margin-top: 4%;
+  width: 100%;
+  height: 1100px;
+  #map {
+    width: 80%;
+    height: 900px;
+    margin: 0 auto;
+    display: none;
+  }
 }
 
-
-#canvas {
-  margin-top: 30px;
-  max-width: 900px;
+.next48, .nextminutes {
   margin: 0 auto;
-  margin-top: 5%;
+  margin-top: 4%;
+  min-height: 500px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  #canvas, #pressure, #temp, #minutes{
+    max-width: 900px;
+    margin-top: 5%;
+    min-width: 200px;
+    margin: 0 auto;
+    margin-top: 30px;
+  }
 }
 
 .localWeather {
@@ -58,11 +77,13 @@ body {
   display: flex;
   flex-direction: column;
   display: none;
+  min-height: 50px;
+  flex: 1;
   .currentLocation {
     margin: 0 auto;
     // margin-top: 5%;
     width: 60%;
-    height: 50px;
+    min-height: 50px;
     border: 3px solid white;
     text-align: center;
     p {
@@ -104,7 +125,7 @@ body {
   }
   .week {
     width: 100%;
-    height: 450px;
+    min-height: 450px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;

@@ -36,7 +36,6 @@ export class Location {
 
   getLocation(info) {
     let radar = new RadarMap();
-    console.log(info);
     let lat = info.results[0].geometry.location.lat;
     let lng = info.results[0].geometry.location.lng;
     let array = [lat, lng];
@@ -46,7 +45,6 @@ export class Location {
   }
 
   main(street, city, state) {
-    console.log(street, city, state);
     let that = this;
     const string = this.combine(street, city, state);
     return new Promise(function(resolve, reject) {
@@ -66,7 +64,6 @@ export class Location {
 
   getInfo() {
     setTimeout(function() {
-      console.log(this.data);
     }, 2000);
   }
 }

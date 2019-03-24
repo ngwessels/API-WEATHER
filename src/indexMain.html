@@ -42,15 +42,29 @@
         </div>
         <div class="Day6 dayInfo">
         </div>
-        <canvas id="canvas" width="300" height="300"></canvas>
+        <div class="summary">
+          <p id='summary'></p>
+        </div>
       </div>
-
+      <div class="next48">
+        <p>Next 48 Hours</p>
+        <canvas id="canvas" width="300" height="300"></canvas>
+        <canvas id='pressure' width='300' height='300'></canvas>
+        <canvas id='temp' width='300' height='300'></canvas>
+      </div>
+      <div class="nextminutes">
+        <p>Next 60 Minutes</p>
+        <canvas id="minutes" width="300" height="300"></canvas>
+      </div>
     </div>
 
 
 
     <!-- <iframe src="./weatherMap1.html"></iframe> -->
-    <div id="map">
+    <div class="mapContainer">
+      <div id="map">
+      </div>
+
     </div>
     <div class="darkskylogo">
       <img src="./assets/img/darksky.png" alt="Dark Sky Logo">

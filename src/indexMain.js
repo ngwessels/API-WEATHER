@@ -37,7 +37,8 @@ $(document).ready(function() {
           weather.getMinutely();
           $(".darkskylogo").hide();
           $("#loadingScreen").hide();
-          // $("#map").show();
+          $(".mapContainer").show();
+          $("#map").show();
           setInterval(function() {
             let myPromise2 = weather.main(location.currentCoords);
             myPromise2.then(function(response) {

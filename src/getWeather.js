@@ -18,6 +18,7 @@ export class Weather {
     this.results = [];
     this.lat;
     this.lng;
+    this.summary = [];
   }
 
   resetDivs() {
@@ -32,6 +33,7 @@ export class Weather {
     let url = 'https://corsanywhere.herokuapp.com/https://api.darksky.net/forecast/' + process.env.dark_sky_api + "/" + lat + "," + lng;
     return url;
   }
+
 
   getWeather(info) {
 
@@ -103,6 +105,7 @@ export class Weather {
     let d = new Date();
     let dayNumber = d.getDay();
     let dayToday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    let daySummary = [];
     for(let i = 0; i < dayNumber; i++) {
       let currentDay = dayToday[0];
       dayToday.shift();
@@ -149,6 +152,7 @@ export class Weather {
       let windGust = daily.windGust;
       let windGustTime = daily.windGustTime;
       let windSpeed = daily.windSpeed;
+      daySummary[i] = summary;
       // array = [apparentTempHigh, apparentTempHighTime, apparentTempLow, apparentTempLowTime, apparentTempMax, apparentTempMaxTime, apparentTempMin, apparentTempMinTime, cloudCover, dewPoint, humidity, icon, moonPhase, ozone, precipIntensity, precipIntensityMax, precipIntensityMaxTime, precipProbability, pressure, summary, sunrise, sunset, tempHigh, tempHighTime, tempLow, tempLowTime, tempMax, tempMaxTime, tempMin, tempMinTime, time, uv, uvTime, visibility, windBearing, windGust, windGustTime, windSpeed]
       // day[i] = array;
       if(i == 0) {
@@ -181,7 +185,19 @@ export class Weather {
       $(".Day" + [i]).hide();
       $(".Day" + [i]).fadeIn(i * 800);
     }
+    this.clickFunction(daySummary);
+
   }
+
+  clickFunction(summary) {
+    for(let i = 0; i < 7; i++) {
+      let that = this;
+      $(".Day" + [i]).click(function() {
+        that.daySummary(i, summary[i]);
+      });
+    }
+  }
+
 
 
   timeConverter(input) {
@@ -278,12 +294,131 @@ export class Weather {
       humidity = humidity * 100;
       precipProbability = precipProbability * 100;
       visibility = visibility * 10;
-      graph[i] = {cloud: cloudCover, dewPoint: dewPoint, humidity: humidity, ozone: ozone, precip: precipProbability, uv: uv, visibility: visibility, time: time};
+      graph[i] = {cloud: cloudCover, dewPoint: dewPoint, humidity: humidity, ozone: ozone, precip: precipProbability, pressure: pressure, temp: temp, uv: uv, visibility: visibility, time: time};
       array = [apparentTemp, cloudCover, dewPoint, humidity, icon, ozone, precipIntensity, precipProbability, pressure, summary, temp, uv ,visibility, windBearing, windGust, windSpeed];
       hour[i] = array;
     }
     this.drawGraph(graph);
+    this.pressureGraph(graph);
+    this.precipGraph(graph);
   }
+
+  precipGraph(input) {
+    let dataTemp = [];
+    let dataTime = [];
+    for(let i = 0; i < input.length; i++) {
+      let instance = input[i];
+      let temp = instance.temp;
+      let time = instance.time;
+      dataTemp.push(temp);
+      dataTime.push(time);
+    }
+    var c = $("#temp");
+    var speedCanvas = document.getElementById("temp");
+
+    Chart.defaults.global.defaultFontFamily = "Lato";
+    Chart.defaults.global.defaultFontSize = 18;
+
+    var dataFirst = {
+        label: "Temperature",
+        data: dataTemp,
+        lineTension: 0.3,
+        fill: false,
+        borderColor: 'red',
+        backgroundColor: 'red',
+        pointBorderColor: 'red',
+        pointBackgroundColor: 'transparent',
+        pointRadius: 5,
+        pointHoverRadius: 15,
+        pointHitRadius: 30,
+        pointBorderWidth: 2,
+        pointStyle: 'rect',
+      };
+
+    var speedData = {
+      labels: dataTime,
+      datasets: [dataFirst]
+    };
+
+    var chartOptions = {
+      legend: {
+        display: true,
+        position: 'top',
+        labels: {
+          boxWidth: 80,
+          fontColor: 'white'
+        }
+      }
+    };
+
+    var lineChart = new Chart(speedCanvas, {
+      type: 'line',
+      data: speedData,
+      options: chartOptions
+    });
+
+  }
+
+
+
+  pressureGraph(input) {
+    let dataPressure = [];
+    let dataTime = [];
+    for(let i = 0; i < input.length; i++) {
+      let instance = input[i];
+      let pressure = instance.pressure;
+      let time = instance.time;
+      dataPressure.push(pressure);
+      dataTime.push(time);
+    }
+    var c = $("#pressure");
+    var speedCanvas = document.getElementById("pressure");
+
+    Chart.defaults.global.defaultFontFamily = "Lato";
+    Chart.defaults.global.defaultFontSize = 18;
+
+    var dataFirst = {
+        label: "Pressure Millibars",
+        data: dataPressure,
+        lineTension: 0.3,
+        fill: false,
+        borderColor: 'red',
+        backgroundColor: 'red',
+        pointBorderColor: 'red',
+        pointBackgroundColor: 'transparent',
+        pointRadius: 5,
+        pointHoverRadius: 15,
+        pointHitRadius: 30,
+        pointBorderWidth: 2,
+        pointStyle: 'rect',
+      };
+
+    var speedData = {
+      labels: dataTime,
+      datasets: [dataFirst]
+    };
+
+    var chartOptions = {
+      legend: {
+        display: true,
+        position: 'top',
+        labels: {
+          boxWidth: 80,
+          fontColor: 'white'
+        }
+      }
+    };
+
+    var lineChart = new Chart(speedCanvas, {
+      type: 'line',
+      data: speedData,
+      options: chartOptions
+    });
+
+  }
+
+
+
   drawGraph(input) {
     let dataClouds = [];
     let dataDewPoint = [];
@@ -312,7 +447,6 @@ export class Weather {
       dataVisibility.push(visibility);
       dataTime.push(time);
     }
-    console.log(dataHumidity);
     var c = $("#canvas");
     var speedCanvas = document.getElementById("canvas");
 
@@ -425,14 +559,97 @@ export class Weather {
       let precipIntensity = minute.precipIntensity;
       let precipProbability = minute.precipProbability;
       let time = minute.time;
-      array = [precipIntensity, precipProbability, time];
-      minutely[i] = array;
+      time = this.timeConverter(time);
+      minutely[i] = {precipProbability: precipProbability, precipIntensity: precipIntensity, time: time};
     }
     this.getDaily();
     this.getCurrently();
     this.getHourly();
+    this.precipGraph(minutely);
   }
 
+
+
+
+
+
+  precipGraph(input) {
+    let dataIntensity = [];
+    let dataProbability = [];
+    let dataTime = [];
+    for(let i = 0; i < input.length; i++) {
+      let instance = input[i];
+      let probability = instance.precipProbability;
+      let intensity = instance.precipIntensity;
+      let time = instance.time;
+      dataProbability.push(probability);
+      dataIntensity.push(intensity);
+      dataTime.push(time);
+    }
+    var c = $("#minutes");
+    var speedCanvas = document.getElementById("minutes");
+
+    Chart.defaults.global.defaultFontFamily = "Lato";
+    Chart.defaults.global.defaultFontSize = 18;
+
+    var dataFirst = {
+        label: "Precipitation Probability",
+        data: dataProbability,
+        lineTension: 0.3,
+        fill: false,
+        borderColor: 'red',
+        backgroundColor: 'red',
+        pointBorderColor: 'red',
+        pointBackgroundColor: 'transparent',
+        pointRadius: 5,
+        pointHoverRadius: 15,
+        pointHitRadius: 30,
+        pointBorderWidth: 2,
+        pointStyle: 'rect',
+      };
+      var dataSecond = {
+          label: "Precipitation Intensity(in/h)",
+          data: dataIntensity,
+          lineTension: 0.3,
+          fill: false,
+          borderColor: 'green',
+          backgroundColor: 'green',
+          pointBorderColor: 'green',
+          pointBackgroundColor: 'transparent',
+          pointRadius: 5,
+          pointHoverRadius: 15,
+          pointHitRadius: 30,
+          pointBorderWidth: 2,
+          pointStyle: 'rect',
+        };
+
+    var speedData = {
+      labels: dataTime,
+      datasets: [dataFirst, dataSecond]
+    };
+
+    var chartOptions = {
+      legend: {
+        display: true,
+        position: 'top',
+        labels: {
+          boxWidth: 80,
+          fontColor: 'white'
+        }
+      }
+    };
+
+    var lineChart = new Chart(speedCanvas, {
+      type: 'line',
+      data: speedData,
+      options: chartOptions
+    });
+
+  }
+  daySummary(i, summary) {
+    $("#summary").empty();
+    $("#summary").text(summary);
+  }
 
 
   main(coords) {
