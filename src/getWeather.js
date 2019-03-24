@@ -102,7 +102,6 @@ export class Weather {
     let length = this.daily.data.length;
     let d = new Date();
     let dayNumber = d.getDay();
-    console.log(length);
     let dayToday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     for(let i = 0; i < dayNumber; i++) {
       let currentDay = dayToday[0];
@@ -208,7 +207,6 @@ export class Weather {
   getCurrently() {
     let current = [];
     let length = this.currently.length;
-    console.log(this.currently);
     let array = [];
     let currently = this.currently;
     let apparentTemperature = currently.apparentTemperature;
@@ -249,12 +247,12 @@ export class Weather {
     } else if(icon == "hail" || icon == "thunderstorm" || icon == "tornado"){
     }
     $(".currently").append("<div class='weatherInfo'><div class='weathertemp'><p class='temp'>Current Temperature: " + temp + "°F</p><p class='wind'>Wind Speed: " + windSpeed + "MPH</p><p class='windDirection'>Wind Direction: " + this.getDirection(windBearing) + "</p><p class='humidity'>Humidity: " + humidity * 100 + "%</p><p class='cloudCover'>Cloud Cover: " + cloudCover * 100 + "%</p><p class='uv'>UV Index: " + uv + "</p></div></div>");
-    console.log(current);
   }
 
   getHourly() {
     let hour = [];
     let length = this.hourly.data.length;
+    let graph = [];
     for(let i = 0; i < length; i++) {
       let array = [];
       let hourly = this.hourly.data[i];
@@ -275,10 +273,148 @@ export class Weather {
       let windBearing = hourly.windBearing;
       let windGust = hourly.windGust;
       let windSpeed = hourly.windSpeed;
+      time = this.timeConverter(time);
+      cloudCover = cloudCover * 100;
+      humidity = humidity * 100;
+      precipProbability = precipProbability * 100;
+      visibility = visibility * 10;
+      graph[i] = {cloud: cloudCover, dewPoint: dewPoint, humidity: humidity, ozone: ozone, precip: precipProbability, uv: uv, visibility: visibility, time: time};
       array = [apparentTemp, cloudCover, dewPoint, humidity, icon, ozone, precipIntensity, precipProbability, pressure, summary, temp, uv ,visibility, windBearing, windGust, windSpeed];
       hour[i] = array;
     }
+    this.drawGraph(graph);
   }
+  drawGraph(input) {
+    let dataClouds = [];
+    let dataDewPoint = [];
+    let dataHumidity = [];
+    let dataOzone = [];
+    let dataPrecip = [];
+    let dataUv = [];
+    let dataVisibility = [];
+    let dataTime = [];
+    for(let i = 0; i < input.length; i++) {
+      let instance = input[i];
+      let clouds = instance.cloud;
+      let dewPoint = instance.dewPoint;
+      let humidity = instance.humidity;
+      let ozone = instance.ozone;
+      let precip = instance.precip;
+      let uv = instance.uv;
+      let visibility = instance.visibility;
+      let time = instance.time;
+      dataClouds.push(clouds);
+      dataDewPoint.push(dewPoint);
+      dataHumidity.push(humidity);
+      dataPrecip.push(precip);
+      dataOzone.push(ozone);
+      dataUv.push(uv);
+      dataVisibility.push(visibility);
+      dataTime.push(time);
+    }
+    console.log(dataHumidity);
+    var c = $("#canvas");
+    var speedCanvas = document.getElementById("canvas");
+
+    Chart.defaults.global.defaultFontFamily = "Lato";
+    Chart.defaults.global.defaultFontSize = 18;
+
+    var dataFirst = {
+        label: "Cloud%",
+        data: dataClouds,
+        lineTension: 0.3,
+        fill: false,
+        borderColor: 'red',
+        backgroundColor: 'red',
+        pointBorderColor: 'red',
+        pointBackgroundColor: 'transparent',
+        pointRadius: 5,
+        pointHoverRadius: 15,
+        pointHitRadius: 30,
+        pointBorderWidth: 2,
+        pointStyle: 'rect',
+      };
+
+    var dataSecond = {
+        label: "Dew Point",
+        data: dataDewPoint,
+        lineTension: 0.3,
+        fill: false,
+        borderColor: 'orange',
+        backgroundColor: 'orange',
+        pointBorderColor: 'orange',
+        pointBackgroundColor: 'transparent',
+        pointRadius: 5,
+        pointHoverRadius: 15,
+        pointHitRadius: 15,
+        pointBorderWidth: 2
+      };
+      var dataThird = {
+          label: "Humidity%",
+          data: dataHumidity,
+          lineTension: 0.3,
+          fill: false,
+          borderColor: 'yellow',
+          backgroundColor: 'yellow',
+          pointBorderColor: 'yellow',
+          pointBackgroundColor: 'transparent',
+          pointRadius: 5,
+          pointHoverRadius: 15,
+          pointHitRadius: 15,
+          pointBorderWidth: 2
+        };
+      var dataFourth = {
+          label: "Precipitation%",
+          data: dataPrecip,
+          lineTension: 0.3,
+          fill: false,
+          borderColor: 'green',
+          backgroundColor: 'green',
+          pointBorderColor: 'green',
+          pointBackgroundColor: 'transparent',
+          pointRadius: 5,
+          pointHoverRadius: 15,
+          pointHitRadius: 15,
+          pointBorderWidth: 2
+          };
+      var dataFifth = {
+          label: "Visibility",
+          data: dataVisibility,
+          lineTension: 0.3,
+          fill: false,
+          borderColor: 'blue',
+          backgroundColor: 'blue',
+          pointBorderColor: 'blue',
+          pointBackgroundColor: 'transparent',
+          pointRadius: 5,
+          pointHoverRadius: 15,
+          pointHitRadius: 15,
+          pointBorderWidth: 2
+          };
+
+    var speedData = {
+      labels: dataTime,
+      datasets: [dataFirst, dataSecond, dataThird, dataFourth, dataFifth]
+    };
+
+    var chartOptions = {
+      legend: {
+        display: true,
+        position: 'top',
+        labels: {
+          boxWidth: 80,
+          fontColor: 'white'
+        }
+      }
+    };
+
+    var lineChart = new Chart(speedCanvas, {
+      type: 'line',
+      data: speedData,
+      options: chartOptions
+    });
+  }
+
 
   getMinutely() {
     let length = this.minutely.data.length;

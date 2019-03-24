@@ -9,6 +9,7 @@ import './example/index.js';
 import './sass/weather-icon-animated.scss';
 import './sass/loading.scss';
 import './sass/styles.scss';
+import Chart from 'chart.js';
 
 
 $(document).ready(function() {
@@ -55,7 +56,4 @@ $(document).ready(function() {
     },3000);
   });
   // location.main("2678 NW Stringtown Rd", "Forest Grove", "OR");
-
-
-
 });
