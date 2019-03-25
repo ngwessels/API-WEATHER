@@ -7,6 +7,7 @@ import './example/files/map.scss';
 import './example/leaflet/leaflet-languageselector.scss';
 import './example/index.js';
 import './sass/weather-icon-animated.scss';
+import './sass/windDirection.scss';
 import './sass/loading.scss';
 import './sass/styles.scss';
 import Chart from 'chart.js';
@@ -39,6 +40,7 @@ $(document).ready(function() {
           $("#loadingScreen").hide();
           $(".mapContainer").show();
           $("#map").show();
+          weather.displaySpecs();
           setInterval(function() {
             let myPromise2 = weather.main(location.currentCoords);
             myPromise2.then(function(response) {

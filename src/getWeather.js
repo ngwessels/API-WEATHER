@@ -99,6 +99,140 @@ export class Weather {
     return string;
   }
 
+  displaySpecs() {
+    let info = [];
+    let d = new Date();
+    let dayNumber = d.getDay();
+    let dayToday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    let daySummary = [];
+    for(let i = 0; i < dayNumber; i++) {
+      let currentDay = dayToday[0];
+      dayToday.shift();
+      dayToday.push(currentDay);
+    }
+    for(let i = 0; i < this.daily.data.length; i++) {
+      var string;
+      let daily = this.daily.data[i];
+      let apparentTempHigh = daily.apparentTemperatureHigh;
+      let apparentTempHighTime = daily.apparentTemperatureHighTime;
+      let apparentTempLow = daily.apparentTemperatureLow;
+      let apparentTempLowTime = daily.apparentTemperatureLowTime;
+      let apparentTempMax = daily.apparentTemperatureMax;
+      let apparentTempMaxTime = daily.apparentTemperatureMaxTime;
+      let apparentTempMin = daily.apparentTemperatureMin;
+      let apparentTempMinTime = daily.apparentTemperatureMinTime;
+      let cloudCover = daily.cloudCover;
+      let dewPoint = daily.dewPoint;
+      let humidity = daily.humidity;
+      let icon = daily.icon;
+      let iconInfo;
+      if(icon == "clear-day" || icon == "clear-night") {
+        iconInfo = "<div class='sunny'><div class='sun'><div class='rays'></div></div></div>";
+      } else if (icon == "rain") {
+        iconInfo = "<div class='rainy'><div class='cloud'></div><div class='rain'></div></div>";
+      } else if (icon == "snow") {
+        iconInfo = "<div class='flurries'><div class='cloud'></div><div class='snow'><div class='flake'></div><div class='flake'></div></div></div>";
+      } else if (icon == "sleet") {
+        iconInfo = "<div class='flurries'><div class='cloud'></div><div class='snow'><div class='flake'></div><div class='rain'></div></div></div>";
+      } else if(icon == "wind") {
+        iconInfo = "<div class='sun-clouds'><div class='cloud'></div><div class='sun'><div class='rays'></div></div></div>";
+      } else if(icon == "fog") {
+        iconInfo = "<div class='cloudy'><div class='cloud'></div><div class='cloud'></div></div>";
+      } else if(icon == "cloudy") {
+        iconInfo = "<div class='cloudy'><div class='cloud'></div><div class='cloud'></div></div>";
+      } else if(icon == "partly-cloudy-day" || icon == "partly-cloudy-night") {
+        iconInfo = "<div class='sun-clouds'><div class='cloud'></div><div class='sun'><div class='rays'></div></div></div>";
+      } else if(icon == "hail" || icon == "thunderstorm" || icon == "tornado"){
+      }
+      let moonPhase = daily.moonPhase;
+      let ozone = daily.ozone;
+      let precipIntensity = daily.precipIntensity;
+      let precipIntensityMax = daily.precipIntensityMax;
+      let precipIntensityMaxTime = daily.precipIntensityMaxTime;
+      let precipProbability = daily.precipProbability;
+      let pressure = daily.pressure;
+      let summary = daily.summary;
+      let sunrise = daily.sunriseTime;
+      let sunset = daily.sunsetTime;
+      let tempHigh = daily.temperatureHigh;
+      let tempHighTime = daily.temperatureHighTime;
+      let tempLow = daily.temperatureLow;
+      let tempLowTime = daily.temperatureLowTime;
+      let tempMax = daily.temperatureMax;
+      let tempMaxTime = daily.temperatureMaxTime;
+      let tempMin = daily.temperatureMin;
+      let tempMinTime = daily.temperatureMinTime;
+      let time = daily.time;
+      let uv = daily.uvIndex;
+      let uvTime = daily.uvIndexTime;
+      let visibility = daily.visibility;
+      let windBearing = daily.windBearing;
+      let windGust = daily.windGust;
+      let windGustTime = daily.windGustTime;
+      let windSpeed = daily.windSpeed;
+      cloudCover = cloudCover * 100;
+      sunrise = this.timeConverter(sunrise);
+      sunset = this.timeConverter(sunset);
+      uvTime = this.timeConverter(uvTime);
+      windBearing = this.getDirection(windBearing);
+      tempHighTime = this.timeConverter(tempHighTime);
+      tempLowTime = this.timeConverter(tempLowTime);
+      precipIntensityMaxTime = this.timeConverter(precipIntensityMaxTime);
+      var checkedPrec = this.checkPrecipitation(precipIntensity, precipIntensityMax, precipIntensityMaxTime, precipProbability);
+      apparentTempHighTime = this.timeConverter(apparentTempHighTime);
+      apparentTempLowTime = this.timeConverter(apparentTempLowTime);
+      moonPhase = this.moonPhase(moonPhase);
+      string = "<p id='Day'>" + dayToday[i] + "</p><div class='moonInfo'<p>" + moonPhase + "</p></div><div class='weatherIconInfo'>" + iconInfo + "</div><p id='summary>'" + summary + "</p><div class='tempInfo'><p>High Temperature " + tempHigh + "°F at around " + tempHighTime + ".</p><p>Low Temperature " + tempLow + "°F at around " + tempLowTime + ".</p><p>Feels Like High Temperature " + apparentTempHigh + "°F at around " + apparentTempHighTime + ".</p><p>Feels Like Low Temperature " + apparentTempLow + "°F at around " + apparentTempLowTime + ".</p></div><div class='humidity'><p>Humidity is at " + humidity + "%</p><p>Visibility is at " + visibility + "</p></div><div class='pressure'><p>Pressure is at " + pressure + " Millibars</p></div><div class='wind'><div class='compass'><div class='direction'><p>" + windBearing + "<span>" + windSpeed + " mph</span></p></div><div class='arrow " + windBearing +"'></div></div></div><div class='cloudInfo'><p>Cloud Cover: " + cloudCover + "%</p></div><div class='dewPoint'><p>Dew Point is at " + dewPoint + "°F</p></div><div class='precipitationInfo'>" + checkedPrec + "</div><div class='uv'><p>UV Index is at " + uv + ". The Worst time to be outside will be around " + uvTime + ".</p></div><div class='ozone'><p>On average the Ozone layer will be at " + ozone + " Dobson Units. Visit <a href='https://ozonewatch.gsfc.nasa.gov/facts/dobson_SH.html'>Ozone Watch</a> for more info.</p></div><div class='sunInfo'><p>The Sun will rise at: " + sunrise + ".</p><p>The Sun will set at " + sunset + "</p></div>";
+      info[i] = string;
+    }
+    this.clickFunction(info);
+  }
+
+  clickFunction(summary) {
+    for(let i = 0; i < 7; i++) {
+      let that = this;
+      $(".Day" + [i]).click(function() {
+        that.daySummary(i, summary[i]);
+      });
+    }
+  }
+  checkPrecipitation(intensity, intensityMax, time, probability) {
+    let string;
+    probability = probability * 100;
+    if(probability > 0){
+      string = "<p>There is a " + probability + "% chance or Precipitation. You will likely get " + intensity + " inches of Precipitation. At around "  + time + " the precipitation will be coming down the hardest.</p>";
+    } else {
+      string = "<p>No Rain in Forecast</p>";
+    }
+    return string;
+  }
+
+  moonPhase(input) {
+    if(input == 0) {
+      return "New Moon";
+    } else if(input > 0 && input < 0.25) {
+      return "Waxing Crescent Moon";
+    } else if(input == 0.25) {
+      return "First Quarter Moon";
+    } else if(input > 0.25 && input < 0.5) {
+      return "Waxing Gibbous Moon";
+    } else if(input == 0.5) {
+      return "Full Moon";
+    } else if(input > 0.5 && input < 0.75) {
+      return "Waning Gibbous";
+    } else if(input == 0.75) {
+      return "Last Quarter Moon";
+    } else if(input > 0.75) {
+      return "Waning Crescent Moon";
+    }
+  }
+
+
+  daySummary(i, summary) {
+    $(".summary").empty();
+    $(".summary").append(summary);
+  }
+
   getDaily() {
     let day = [];
     let length = this.daily.data.length;
@@ -185,18 +319,9 @@ export class Weather {
       $(".Day" + [i]).hide();
       $(".Day" + [i]).fadeIn(i * 800);
     }
-    this.clickFunction(daySummary);
 
   }
 
-  clickFunction(summary) {
-    for(let i = 0; i < 7; i++) {
-      let that = this;
-      $(".Day" + [i]).click(function() {
-        that.daySummary(i, summary[i]);
-      });
-    }
-  }
 
 
 
@@ -300,10 +425,10 @@ export class Weather {
     }
     this.drawGraph(graph);
     this.pressureGraph(graph);
-    this.precipGraph(graph);
+    this.temperatureGraph(graph);
   }
 
-  precipGraph(input) {
+  temperatureGraph(input) {
     let dataTemp = [];
     let dataTime = [];
     for(let i = 0; i < input.length; i++) {
@@ -645,10 +770,6 @@ export class Weather {
       options: chartOptions
     });
 
-  }
-  daySummary(i, summary) {
-    $("#summary").empty();
-    $("#summary").text(summary);
   }
 
 

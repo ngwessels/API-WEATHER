@@ -6,9 +6,9 @@ body {
   // overflow: hidden;
 }
 
-#summary {
-  color: white;
-}
+// #summary {
+//   color: white;
+// }
 .addressForm {
   // display: none;
   width: 80%;
@@ -56,10 +56,10 @@ body {
 .next48, .nextminutes {
   margin: 0 auto;
   margin-top: 4%;
-  min-height: 500px;
+  min-height: 200px;
   width: 100%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: wrap;
 
   #canvas, #pressure, #temp, #minutes{
@@ -162,6 +162,72 @@ body {
     }
   }
 }
+
+
+
+.summary {
+  display: grid;
+  grid-template-areas:
+  'moonInfo day day'
+  'sunInfo weatherIconInfo cloud'
+  'uv summary pressure'
+  'ozone wind humidity'
+  'dewPoint precip tempInfo';
+  min-height: 500px;
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 4%;
+  background-color: white;
+  color: black;
+  .moonInfo {
+    grid-area: moonInfo;
+  }
+  #Day {
+    margin: 0 auto;
+    grid-area: day;
+  }
+  .weatherIconInfo {
+    grid-area: weatherIconInfo;
+  }
+  .sunInfo {
+    grid-area: sunInfo;
+  }
+  .cloudInfo {
+    grid-area: cloud;
+  }
+  .uv {
+    grid-area: uv;
+  }
+  #summary {
+    grid-area: summary;
+  }
+  .pressure {
+    grid-area: pressure;
+  }
+  .ozone {
+    grid-area: ozone;
+  }
+  .wind {
+    grid-area: wind;
+  }
+  .humidity {
+    grid-area: humidity;
+  }
+  .dewPoint {
+    grid-area: dewPoint;
+  }
+  .precipitationInfo {
+    grid-area: precip;
+  }
+  .tempInfo {
+    grid-area: tempInfo;
+  }
+  grid-gap: 10px;
+}
+
+
+
+
 
 
 .darkskylogo {
