@@ -182,7 +182,8 @@ export class Weather {
       apparentTempHighTime = this.timeConverter(apparentTempHighTime);
       apparentTempLowTime = this.timeConverter(apparentTempLowTime);
       moonPhase = this.moonPhase(moonPhase);
-      string = "<p id='Day'>" + dayToday[i] + "</p><div class='moonInfo'<p>" + moonPhase + "</p></div><div class='weatherIconInfo'>" + iconInfo + "</div><p id='summary>'" + summary + "</p><div class='tempInfo'><p>High Temperature " + tempHigh + "°F at around " + tempHighTime + ".</p><p>Low Temperature " + tempLow + "°F at around " + tempLowTime + ".</p><p>Feels Like High Temperature " + apparentTempHigh + "°F at around " + apparentTempHighTime + ".</p><p>Feels Like Low Temperature " + apparentTempLow + "°F at around " + apparentTempLowTime + ".</p></div><div class='humidity'><p>Humidity is at " + humidity + "%</p><p>Visibility is at " + visibility + "</p></div><div class='pressure'><p>Pressure is at " + pressure + " Millibars</p></div><div class='wind'><div class='compass'><div class='direction'><p>" + windBearing + "<span>" + windSpeed + " mph</span></p></div><div class='arrow " + windBearing +"'></div></div></div><div class='cloudInfo'><p>Cloud Cover: " + cloudCover + "%</p></div><div class='dewPoint'><p>Dew Point is at " + dewPoint + "°F</p></div><div class='precipitationInfo'>" + checkedPrec + "</div><div class='uv'><p>UV Index is at " + uv + ". The Worst time to be outside will be around " + uvTime + ".</p></div><div class='ozone'><p>On average the Ozone layer will be at " + ozone + " Dobson Units. Visit <a href='https://ozonewatch.gsfc.nasa.gov/facts/dobson_SH.html'>Ozone Watch</a> for more info.</p></div><div class='sunInfo'><p>The Sun will rise at: " + sunrise + ".</p><p>The Sun will set at " + sunset + "</p></div>";
+      humidity = humidity * 100;
+      string = "<p id='Day'>" + dayToday[i] + "</p><div class='moonInfo'<p>" + moonPhase + "</p></div><div class='weatherIconInfo'>" + iconInfo + "</div><p id='summary>'" + summary + "</p><div class='tempInfo'><p>High Temperature " + tempHigh + "°F at around " + tempHighTime + ".</p><p>Low Temperature " + tempLow + "°F at around " + tempLowTime + ".</p><p>Feels Like High Temperature " + apparentTempHigh + "°F at around " + apparentTempHighTime + ".</p><p>Feels Like Low Temperature " + apparentTempLow + "°F at around " + apparentTempLowTime + ".</p></div><div class='humidity'><p>Humidity is at " + humidity + "%</p><p>Visibility: " + visibility + " miles.</p></div><div class='pressure'><p>Average Pressure " + pressure + " Millibars</p></div><div class='wind'><div class='compass'><div class='direction'><p>" + windBearing + "<span>" + windSpeed + " mph</span></p></div><div class='arrow " + windBearing +"'></div></div></div><div class='cloudInfo'><p>Cloud Cover: " + cloudCover + "%</p></div><div class='dewPoint'><p>Dew Point is at " + dewPoint + "°F</p></div><div class='precipitationInfo'>" + checkedPrec + "</div><div class='uv'><p>UV Index is at " + uv + ". The Worst time to be outside will be around " + uvTime + ".</p></div><div class='ozone'><p>On average the Ozone layer will be at " + ozone + " Dobson Units. Visit <a href='https://ozonewatch.gsfc.nasa.gov/facts/dobson_SH.html'>Ozone Watch</a> for more info.</p></div><div class='sunInfo'><p>The Sun will rise at: " + sunrise + ".</p><p>The Sun will set at " + sunset + "</p></div>";
       info[i] = string;
     }
     this.clickFunction(info);
@@ -193,6 +194,7 @@ export class Weather {
       let that = this;
       $(".Day" + [i]).click(function() {
         that.daySummary(i, summary[i]);
+        // $(".summary").show();
       });
     }
   }
@@ -200,7 +202,7 @@ export class Weather {
     let string;
     probability = probability * 100;
     if(probability > 0){
-      string = "<p>There is a " + probability + "% chance or Precipitation. You will likely get " + intensity + " inches of Precipitation. At around "  + time + " the precipitation will be coming down the hardest.</p>";
+      string = "<p>There is a " + probability + "% chance of Precipitation. You will likely get " + intensity + " inches of Precipitation. At around "  + time + " the precipitation will be coming down the hardest.</p>";
     } else {
       string = "<p>No Rain in Forecast</p>";
     }
