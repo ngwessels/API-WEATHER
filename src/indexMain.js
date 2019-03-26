@@ -40,6 +40,7 @@ $(document).ready(function() {
           $("#loadingScreen").hide();
           $(".mapContainer").show();
           $("#map").show();
+          $(".next48").show();
           weather.displaySpecs();
           setInterval(function() {
             let myPromise2 = weather.main(location.currentCoords);
