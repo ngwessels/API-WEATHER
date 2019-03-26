@@ -84,7 +84,7 @@ body {
     // margin-top: 5%;
     width: 60%;
     min-height: 50px;
-    border: 3px solid white;
+    background-color: #323233;
     text-align: center;
     p {
       color: white;
@@ -110,7 +110,7 @@ body {
         }
         width: 300px;
         height: 450px;
-        border: 3px solid white;
+        background-color: #323233;
         margin: 0 auto;
         margin-top: 2%;
         border-radius: 25px;
@@ -134,7 +134,7 @@ body {
     .dayInfo {
       width: 300px;
       height: 450px;
-      border: 3px solid white;
+      background-color: #323233;
       margin: 0 auto;
       margin-top: 4%;
       border-radius: 25px;
@@ -163,69 +163,132 @@ body {
   }
 }
 
-
-
-.summary {
-  display: grid;
-  grid-template-areas:
-  'moonInfo day day'
-  'sunInfo weatherIconInfo cloud'
-  'uv summary pressure'
-  'ozone wind humidity'
-  'dewPoint precip tempInfo';
-  min-height: 500px;
-  width: 80%;
-  margin: 0 auto;
-  margin-top: 4%;
-  background-color: white;
-  color: black;
-  .moonInfo {
-    grid-area: moonInfo;
-  }
-  #Day {
+.dailySpecsGrid {
+  display: none;
+  .summary {
+    display: grid;
+    grid-template-areas:
+    'moonInfo day blank'
+    'sunInfo weatherIconInfo cloud'
+    'uv summary pressure'
+    'ozone wind humidity'
+    'dewPoint precip tempInfo';
+    min-height: 500px;
+    width: 80%;
     margin: 0 auto;
-    grid-area: day;
+    margin-top: 4%;
+    background-color: #323233;
+    color: white;
+    border-radius: 25px;
+    .moonInfo {
+      grid-area: moonInfo;
+      justify-content: center;
+      align-items: center;
+      font-size: 25px;
+      text-align: center;
+    }
+    #Day {
+      margin: 0 auto;
+      grid-area: day;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 25px;
+      text-align: center;
+    }
+    .weatherIconInfo {
+      grid-area: weatherIconInfo;
+      justify-content: center;
+      align-items: center;
+      font-size: 25px;
+      text-align: center;
+    }
+    .sunInfo {
+      grid-area: sunInfo;
+      justify-content: center;
+      align-items: center;
+      font-size: 25px;
+      text-align: center;
+    }
+    .cloudInfo {
+      grid-area: cloud;
+      justify-content: center;
+      align-items: center;
+      font-size: 25px;
+      text-align: center;
+    }
+    .uv {
+      grid-area: uv;
+      justify-content: center;
+      align-items: center;
+      font-size: 25px;
+      text-align: center;
+    }
+    #summary {
+      grid-area: summary;
+      justify-content: center;
+      align-items: center;
+      font-size: 25px;
+      text-align: center;
+    }
+    .pressure {
+      grid-area: pressure;
+      justify-content: center;
+      align-items: center;
+      font-size: 25px;
+      text-align: center;
+    }
+    .ozone {
+      grid-area: ozone;
+      justify-content: center;
+      align-items: center;
+      font-size: 25px;
+      text-align: center;
+    }
+    .wind {
+      grid-area: wind;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .humidity {
+      grid-area: humidity;
+      justify-content: center;
+      align-items: center;
+      font-size: 25px;
+      text-align: center;
+    }
+    .dewPoint {
+      grid-area: dewPoint;
+      justify-content: center;
+      align-items: center;
+      font-size: 25px;
+      text-align: center;
+    }
+    .precipitationInfo {
+      grid-area: precip;
+      justify-content: center;
+      align-items: center;
+      font-size: 25px;
+      text-align: center;
+    }
+    .tempInfo {
+      grid-area: tempInfo;
+      justify-content: center;
+      align-items: center;
+      font-size: 25px;
+      text-align: center;
+    }
+    .blank {
+      grid-area: blank;
+    }
+    grid-gap: 10px;
+    // display: none;
   }
-  .weatherIconInfo {
-    grid-area: weatherIconInfo;
-  }
-  .sunInfo {
-    grid-area: sunInfo;
-  }
-  .cloudInfo {
-    grid-area: cloud;
-  }
-  .uv {
-    grid-area: uv;
-  }
-  #summary {
-    grid-area: summary;
-  }
-  .pressure {
-    grid-area: pressure;
-  }
-  .ozone {
-    grid-area: ozone;
-  }
-  .wind {
-    grid-area: wind;
-  }
-  .humidity {
-    grid-area: humidity;
-  }
-  .dewPoint {
-    grid-area: dewPoint;
-  }
-  .precipitationInfo {
-    grid-area: precip;
-  }
-  .tempInfo {
-    grid-area: tempInfo;
-  }
-  grid-gap: 10px;
-  // display: none;
-}
 
+
+
+}
 
 
 

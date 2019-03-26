@@ -194,7 +194,7 @@ export class Weather {
       let that = this;
       $(".Day" + [i]).click(function() {
         that.daySummary(i, summary[i]);
-        // $(".summary").show();
+        $(".dailySpecsGrid").show();
       });
     }
   }
